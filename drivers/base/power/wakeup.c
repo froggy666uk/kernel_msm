@@ -24,6 +24,8 @@ static bool enable_wlan_ctrl_wake_ws = true;
 module_param(enable_wlan_ctrl_wake_ws, bool, 0644);
 static bool enable_wlan_wake_ws = true;
 module_param(enable_wlan_wake_ws, bool, 0644);
+static bool enable_wlan_wd_wake_ws = true;
+module_param(enable_wlan_wd_wake_ws, bool, 0644);
 
 #include "power.h"
 
@@ -394,6 +396,9 @@ static void wakeup_source_activate(struct wakeup_source *ws)
                 return;
 
 	if (!enable_wlan_wake_ws && !strcmp(ws->name, "wlan_wake"))
+                return;
+
+	if (!enable_wlan_wd_wake_ws && !strcmp(ws->name, "wlan_wd_wake"))
                 return;
 
 	ws->active = true;
